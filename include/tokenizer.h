@@ -34,7 +34,7 @@ typedef struct {
 /* PROTOTYPE */
 
 /* tokenizer */
-int tokenizer(char const *file_name,
+TokenVector *tokenizer(char const *file_name,
     int from_line, int from_colum,
     int to_line, int to_colum,
     char const **token_filter); // Error: KO
