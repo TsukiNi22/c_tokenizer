@@ -1,6 +1,6 @@
 /*
-** EPITECH PROJECT, 2025
-** my_macro_abs.h
+** PERSONAL PROJECT, 2025
+** macro.h
 ** File description:
 ** Header for all macro
 */

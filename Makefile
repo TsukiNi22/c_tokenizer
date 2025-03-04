@@ -17,7 +17,7 @@ W += -Wuninitialized -Wmaybe-uninitialized -Werror
 DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ./include/
-LDFLAGS := -L ./lib/ -lmy
+LDFLAGS :=
 CFLAGS := $(W)
 
 ifeq ($(d), t)
@@ -27,26 +27,15 @@ else ifeq ($(d), o)
 endif
 
 GLOBAL :=	main.c \
-			const.c \
-			sample.c \
-			free_data.c
-
-INIT :=		init/init_data.c \
-			init/data/init_global.c \
-			init/init_flag.c\
-			init/flag/null.c \
-			init/flag/help.c
+			tokenizer.c
 
 FILES := $(GLOBAL) $(INIT)
 SRC := $(addprefix src/, $(FILES))
 OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
 
-TEST_OBJ := $(filter-out main.o, $(OBJ))
-
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	@make -C lib/my --no-print-directory D=$(d)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(BUILD_DIR)/%.o: %.c
@@ -58,23 +47,12 @@ clean:
 	@rm -f tests/*.o
 	@rm -f *.gc*
 	@rm -f vgcore.*
-	@make clean -C lib/my --no-print-directory
 
 fclean: clean
 	@rm -f $(TARGET)
-	@rm -f $(TEST_TARGET)
-	@make fclean -C lib/my --no-print-directory
 
 .NOTPARALLEL:
 re: fclean $(TARGET)
-
-unit_tests:
-	$(CC) -o $(TEST_TARGET) $(TEST_OBJ) tests/*.c \
-	$(CPPFLAGS) $(LDFLAGS) --coverage -lcriterion
-
-tests_run:    unit_tests
-	./$(TEST_TARGET)
-	gcovr . --exclude tests/ --exclude lib/
 
 get_unregistered_files:
 	@find src/ -name "*.c" | while read file; do \
@@ -97,4 +75,4 @@ get_unknow_files:
                 rm -f missing_files.txt; \
         fi
 
-.PHONY: all clean fclean re tests_run get_unregistered_files get_unknow_files
+.PHONY: all clean fclean re get_unregistered_files get_unknow_files
