@@ -30,16 +30,6 @@ typedef struct {
     int count;
 } TokenVector;
 
-TokenVector get_tokens(
-    char const *filename,
-    int from_line,
-    int from_column,
-    int to_line,
-    int to_column,
-    char const **token_filter,
-    int filter_size
-);
-
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
