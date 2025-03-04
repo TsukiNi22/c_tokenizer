@@ -1,0 +1,17 @@
+*.log
+*.gc*
+*.sw*
+*.a
+*.o
+\#*#
+*~
+.obj
+.file_function
+vgcore.*
+main_test*.c
+test_sample.c
+a.out
+unit_tests
+:
+q
+vg
